@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_ticker_search"
+        android:name="com.diazzerss.stocks.ui.TickerSearch.TickerSearchFragment"
+        android:label="@string/title_home">
+        <action
+            android:id="@+id/action_navigation_home_to_companyProfileFragment"
+            app:destination="@id/navigation_company_profile"
+            app:popUpTo="@id/navigation_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_news"
+        android:name="com.diazzerss.stocks.ui.News.NewsFragment"
+        android:label="@string/title_news"
+        tools:layout="@layout/fragment_news" />
+
+    <fragment
+        android:id="@+id/navigation_portfolio"
+        android:name="com.diazzerss.stocks.ui.Portfolio.PortfolioFragment"
+        android:label="@string/title_portfolio"
+        tools:layout="@layout/fragment_portfolio" />
+
+    <fragment
+        android:id="@+id/navigation_company_profile"
+        android:name="com.diazzerss.stocks.ui.Company.CompanyFragment"
+        android:label="@string/title_company_profile"
+        tools:layout="@layout/fragment_company" />
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.diazzerss.stocks.ui.Home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+</navigation>

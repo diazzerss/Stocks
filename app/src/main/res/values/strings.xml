@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Stocks</string>
+    <string name="title_home">Home</string>
+    <string name="title_news">News</string>
+    <string name="title_portfolio">Portfolio</string>
+    <string name="title_company_profile">Company Profile</string>
+    <string name="title_search">Поиск</string>
+    <string name="title_more">Еще</string>
+    <string name="search_hint">Поиск…</string>
+    <string name="title_toolbar_home">Market</string>
+    <string name="title_toolbar_company">Company</string>
+    <string name="label_stock_active">Топ активных</string>
+    <string name="label_stock_gainers">Лидеры роста</string>
+    <string name="label_stock_losers">Лидеры падения</string>
+</resources>
