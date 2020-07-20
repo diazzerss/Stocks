@@ -1,8 +1,6 @@
 package com.diazzerss.stocks
 
-import com.diazzerss.stocks.models.CompanyProfile
-import com.diazzerss.stocks.models.Stock
-import com.diazzerss.stocks.models.Ticker
+import com.diazzerss.stocks.model.*
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.Retrofit
@@ -12,27 +10,28 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-
 interface StockService {
 
-    @GET("search?limit=15&apikey=63bba40cd270c6d62fe2d8a4a16f3f82")
-    //TODO change limit
-    fun getTicker(@Query("query") query:String):  Single<ArrayList<Ticker>>
+    @GET("search?limit=10&apikey=552b5818a1cd3b17126bc16c82be92e6")
+    fun getTicker(@Query("query") query: String): Single<ArrayList<Ticker>>
 
-    @GET("profile/{ticker}?apikey=63bba40cd270c6d62fe2d8a4a16f3f82")
-    fun getCompanyProfile(@Path("ticker") ticker:String): Observable <ArrayList<CompanyProfile>>
+    @GET("profile/{ticker}?apikey=552b5818a1cd3b17126bc16c82be92e6")
+    fun getCompanyProfile(@Path("ticker") ticker: String): Observable<ArrayList<CompanyProfile>>
 
-    @GET("actives?apikey=63bba40cd270c6d62fe2d8a4a16f3f82")
-    fun getTopActive(): Observable <ArrayList<Stock>>
+    @GET("quote/{ticker}?apikey=552b5818a1cd3b17126bc16c82be92e6")
+    fun getQuote(@Path("ticker") ticker: String): Observable<ArrayList<Quote>>
 
-    @GET("gainers?apikey=63bba40cd270c6d62fe2d8a4a16f3f82")
-    fun getTopGainers(): Observable <ArrayList<Stock>>
+    @GET("actives?apikey=552b5818a1cd3b17126bc16c82be92e6")
+    fun getTopActive(): Observable<ArrayList<Stock>>
 
-    @GET("losers?apikey=63bba40cd270c6d62fe2d8a4a16f3f82")
-    fun getTopLosers(): Observable <ArrayList<Stock>>
+    @GET("gainers?apikey=552b5818a1cd3b17126bc16c82be92e6")
+    fun getTopGainers(): Observable<ArrayList<Stock>>
 
+    @GET("losers?apikey=552b5818a1cd3b17126bc16c82be92e6")
+    fun getTopLosers(): Observable<ArrayList<Stock>>
 
-
+    @GET("historical-chart/1hour/{ticker}?apikey=552b5818a1cd3b17126bc16c82be92e6")
+    fun getChartData1Hour(@Path("ticker") ticker: String): Observable<ArrayList<GraphData>>
 
     companion object Factory {
         fun create(): StockService {

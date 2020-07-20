@@ -6,8 +6,8 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_ticker_search"
-        android:name="com.diazzerss.stocks.ui.TickerSearch.TickerSearchFragment"
+        android:id="@+id/navigation_search_old"
+        android:name="com.diazzerss.stocks.ui.search.SearchFragment"
         android:label="@string/title_home">
         <action
             android:id="@+id/action_navigation_home_to_companyProfileFragment"
@@ -17,24 +17,31 @@
 
     <fragment
         android:id="@+id/navigation_news"
-        android:name="com.diazzerss.stocks.ui.News.NewsFragment"
+        android:name="com.diazzerss.stocks.ui.news.NewsFragment"
         android:label="@string/title_news"
         tools:layout="@layout/fragment_news" />
 
     <fragment
         android:id="@+id/navigation_portfolio"
-        android:name="com.diazzerss.stocks.ui.Portfolio.PortfolioFragment"
+        android:name="com.diazzerss.stocks.ui.portfolio.PortfolioFragment"
         android:label="@string/title_portfolio"
         tools:layout="@layout/fragment_portfolio" />
 
     <fragment
         android:id="@+id/navigation_company_profile"
-        android:name="com.diazzerss.stocks.ui.Company.CompanyFragment"
+        android:name="com.diazzerss.stocks.ui.company.CompanyFragment"
         android:label="@string/title_company_profile"
         tools:layout="@layout/fragment_company" />
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.diazzerss.stocks.ui.Home.HomeFragment"
+        android:name="com.diazzerss.stocks.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_search_old"
+            app:destination="@id/navigation_search_old"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/navigation_home" />
+    </fragment>
 </navigation>

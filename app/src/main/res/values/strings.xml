@@ -1,15 +1,26 @@
 <resources>
     <string name="app_name">Stocks</string>
-    <string name="title_home">Home</string>
-    <string name="title_news">News</string>
-    <string name="title_portfolio">Portfolio</string>
-    <string name="title_company_profile">Company Profile</string>
+    <string name="title_home">Главная</string>
+    <string name="title_news">Новости</string>
+    <string name="title_portfolio">Портфолио</string>
+    <string name="title_company_profile">Профиль компании</string>
     <string name="title_search">Поиск</string>
     <string name="title_more">Еще</string>
-    <string name="search_hint">Поиск…</string>
-    <string name="title_toolbar_home">Market</string>
-    <string name="title_toolbar_company">Company</string>
+    <string name="title_toolbar_home">Рынок</string>
+    <string name="title_toolbar_company">Компания</string>
     <string name="label_stock_active">Топ активных</string>
     <string name="label_stock_gainers">Лидеры роста</string>
     <string name="label_stock_losers">Лидеры падения</string>
+    <string name="search_hint">Поиск…</string>
+    <string name="search_error_text">Упс, кажется произошла ошибка.</string>
+    <string name="quote_label_prevClose">Пред. закрытие</string>
+    <string name="quote_label_open">Открытие</string>
+    <string name="quote_label_dayLow">Дневной мин.</string>
+    <string name="quote_label_dayHigh">Дневной макс.</string>
+    <string name="quote_label_yearLow">Годовой мин.</string>
+    <string name="quote_label_yearHigh">Годовой макс.</string>
+    <string name="quote_label_volume">Объем</string>
+    <string name="quote_label_avgVolume">Сред. объем</string>
+    <string name="quote_label_marketCap">Рыночная кап.</string>
+    <string name="quote_label_eps">EPS</string>
 </resources>

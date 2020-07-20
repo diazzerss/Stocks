@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Portfolio.PortfolioFragment">
+    android:paddingBottom="56dp"
+    tools:context=".ui.portfolio.PortfolioFragment">
 
     <TextView
         android:id="@+id/text_portfolio"

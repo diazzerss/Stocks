@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_normal_16">
+
+    <LinearLayout
+        android:id="@+id/quote_prevClose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny_4"
+        android:layout_marginBottom="@dimen/spacing_tiny_4">
+
+        <TextView
+            android:id="@+id/tv_quote_label_prevClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="@string/quote_label_prevClose" />
+
+        <TextView
+            android:id="@+id/tv_quote_prevClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="end"
+            tools:text="PreviousClose" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/quote_open"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny_4"
+        android:layout_marginBottom="@dimen/spacing_tiny_4">
+
+        <TextView
+            android:id="@+id/tv_quote_label_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="@string/quote_label_open" />
+
+        <TextView
+            android:id="@+id/tv_quote_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="end"
+            tools:text="Open" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/quote_dayLow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny_4"
+        android:layout_marginBottom="@dimen/spacing_tiny_4">
+
+        <TextView
+            android:id="@+id/tv_quote_label_dayLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="@string/quote_label_dayLow" />
+
+        <TextView
+            android:id="@+id/tv_quote_dayLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="end"
+            tools:text="DayLow" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/quote_dayHigh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny_4"
+        android:layout_marginBottom="@dimen/spacing_tiny_4">
+
+        <TextView
+            android:id="@+id/tv_quote_label_dayHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="@string/quote_label_dayHigh" />
+
+        <TextView
+            android:id="@+id/tv_quote_dayHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="end"
+            tools:text="DayHigh" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/quote_yearLow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny_4"
+        android:layout_marginBottom="@dimen/spacing_tiny_4">
+
+        <TextView
+            android:id="@+id/tv_quote_label_yearLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="@string/quote_label_yearLow" />
+
+        <TextView
+            android:id="@+id/tv_quote_yearLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="end"
+            tools:text="YearLow" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/quote_yearHigh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny_4"
+        android:layout_marginBottom="@dimen/spacing_tiny_4">
+
+        <TextView
+            android:id="@+id/tv_quote_label_yearHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="@string/quote_label_yearHigh" />
+
+        <TextView
+            android:id="@+id/tv_quote_yearHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="end"
+            tools:text="YearHigh" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/quote_volume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny_4"
+        android:layout_marginBottom="@dimen/spacing_tiny_4">
+
+        <TextView
+            android:id="@+id/tv_quote_label_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="@string/quote_label_volume" />
+
+        <TextView
+            android:id="@+id/tv_quote_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="end"
+            tools:text="Volume" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/quote_avgVolume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny_4"
+        android:layout_marginBottom="@dimen/spacing_tiny_4">
+
+        <TextView
+            android:id="@+id/tv_quote_label_avgVolume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="@string/quote_label_avgVolume" />
+
+        <TextView
+            android:id="@+id/tv_quote_avgVolume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="end"
+            tools:text="avgVolume" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/quote_marketCap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny_4"
+        android:layout_marginBottom="@dimen/spacing_tiny_4">
+
+        <TextView
+            android:id="@+id/tv_quote_label_marketCap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="@string/quote_label_marketCap" />
+
+        <TextView
+            android:id="@+id/tv_quote_marketCap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="end"
+            tools:text="MarketCap" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:id="@+id/quote_eps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_tiny_4"
+        android:layout_marginBottom="@dimen/spacing_tiny_4">
+
+        <TextView
+            android:id="@+id/tv_quote_label_eps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="@string/quote_label_eps" />
+
+        <TextView
+            android:id="@+id/tv_quote_eps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_normal_16"
+            android:layout_weight="1"
+            android:gravity="end"
+            tools:text="EPS" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

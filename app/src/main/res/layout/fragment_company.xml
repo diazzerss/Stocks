@@ -13,14 +13,16 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_company"
             style="@style/Toolbar"
-            app:title="@string/title_toolbar_company" />
+            app:title="@string/title_toolbar_company">
+        </com.google.android.material.appbar.MaterialToolbar>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs_company"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="fixed" />
     </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs_company"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_company"

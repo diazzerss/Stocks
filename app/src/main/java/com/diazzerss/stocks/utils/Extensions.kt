@@ -1,28 +1,44 @@
 package com.diazzerss.stocks.utils
 
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.diazzerss.stocks.BaseViewModelFactory
 import java.text.DecimalFormat
 
-/**
- * Created by Diaz on 07.05.2020.
- */
-
 fun Double.addSign(): String {
-    return if (this > 0) "$+".plus(DecimalFormat("#0.00").format(this))
-    else "$".plus(DecimalFormat("#0.00").format(this))
+    return if (this > 0) "+".plus((DecimalFormat("#0.00").format(this)).plus("$"))
+    else (DecimalFormat("#0.00").format(this)).plus("$")
 }
 
-fun String.removeBrackets(): String {
-    return this.removePrefix("(").removeSuffix(")")
+fun Double.formatDouble(): String {
+    return (DecimalFormat("#0.00").format(this)).plus("$")
 }
 
-fun String.toInitials(): String {
-    return this.trim().getOrNull(0)?.toUpperCase().toString()
+fun String?.addNullPlaceholder(): String {
+    return if (this.isNullOrEmpty()) "null"
+    else this
 }
 
-fun Double.formatDouble():String {
-    return "$".plus(DecimalFormat("#0.00").format(this))
+
+inline fun <reified T : ViewModel> Fragment.getViewModel(noinline creator: (() -> T)? = null): T {
+    return if (creator == null)
+        ViewModelProvider(this).get(T::class.java)
+    else
+        ViewModelProvider(this,
+            BaseViewModelFactory(creator)
+        ).get(T::class.java)
 }
 
+inline fun <reified T : ViewModel> FragmentActivity.getViewModel(noinline creator: (() -> T)? = null): T {
+    return if (creator == null)
+        ViewModelProvider(this).get(T::class.java)
+    else
+        ViewModelProvider(this,
+            BaseViewModelFactory(creator)
+        ).get(T::class.java)
+}
 
 
 
