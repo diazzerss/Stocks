@@ -2,8 +2,8 @@ package com.diazzerss.stocks.ui.search
 
 import android.os.Bundle
 import android.view.*
+import android.widget.AbsListView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
@@ -14,19 +14,15 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.diazzerss.stocks.BaseFragment
 import com.diazzerss.stocks.R
 import com.diazzerss.stocks.databinding.FragmentSearchBinding
-import com.diazzerss.stocks.model.Ticker
 import com.diazzerss.stocks.utils.getViewModel
+import com.diazzerss.stocks.utils.hideKeyboard
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.android.synthetic.main.fragment_search.search_refreshContainer
-import kotlinx.android.synthetic.main.fragment_search.view.*
 
 
-class SearchFragment : BaseFragment() {
+class SearchFragment : Fragment() {
 
     private val vm by lazy { getViewModel<SearchViewModel>() }
 
@@ -48,9 +44,8 @@ class SearchFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //Toolbar
-        val toolbar = search_toolbar
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+
+        (activity as AppCompatActivity).setSupportActionBar(search_toolbar)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
@@ -59,20 +54,31 @@ class SearchFragment : BaseFragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = tickerAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                        hideKeyboard()
+                    }
+                }
+            })
+
+
         }
 
         search_refreshContainer.apply {
             setColorSchemeResources(R.color.colorPrimary)
-            setOnRefreshListener {
-                refreshTickers()
-                search_refreshContainer.isRefreshing = false
-            }
+            isEnabled = false
         }
 
         tickerAdapter.onItemClick = { ticker ->
+            hideKeyboard()
             Navigation
                 .findNavController(view)
-                .navigate(R.id.navigation_company_profile, bundleOf("ticker" to ticker.symbol))
+                .navigate(
+                    R.id.navigation_company_profile,
+                    bundleOf("ticker" to ticker.symbol, "name" to ticker.name)
+                )
         }
 
         initViewModel()
@@ -103,49 +109,21 @@ class SearchFragment : BaseFragment() {
     private fun initViewModel() {
 
         vm.tickers.observe(viewLifecycleOwner, Observer {
-            showTickers(it)
+            tickerAdapter.addData(it)
         })
 
         vm.progress.observe(viewLifecycleOwner, Observer {
-            showProgress(it)
+            search_refreshContainer.isRefreshing = it
+            search_rv_ticker.isVisible = !it
+
         })
         vm.error.observe(viewLifecycleOwner, Observer {
-            showError(it)
+            //showError(it)
         })
 
 
     }
 
-
-    private fun showTickers(tickers:ArrayList<Ticker>){
-        tickerAdapter.addData(tickers)
-    }
-
-    override fun showContent() {
-        super.showContent()
-
-    }
-
-    override fun showProgress(progress: Boolean) {
-        super.showProgress(progress)
-        search_refreshContainer.isRefreshing = progress
-    }
-
-    override fun showError(error: Boolean) {
-        super.showError(error)
-    }
-
-
-
-    private fun refreshTickers() {
-        //TODO Fix refresh error
-        search_refreshContainer.setOnRefreshListener {
-            vm.tickers.observe(viewLifecycleOwner, Observer {
-                tickerAdapter.clearData()
-                tickerAdapter.addData(it)
-            })
-        }
-    }
 }
 
 

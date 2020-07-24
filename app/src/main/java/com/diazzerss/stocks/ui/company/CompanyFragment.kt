@@ -1,20 +1,31 @@
 package com.diazzerss.stocks.ui.company
 
+import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.diazzerss.stocks.R
 import com.diazzerss.stocks.databinding.FragmentCompanyBinding
+import com.diazzerss.stocks.utils.addSign
+import com.diazzerss.stocks.utils.getViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_company.*
 
 
 class CompanyFragment : Fragment() {
 
-    private lateinit var ticker: String
+    private val ticker by lazy { arguments?.getString("ticker").toString() }
+    private val name by lazy { arguments?.getString("name").toString() }
+
+    private val vm by lazy { getViewModel<CompanyViewModel>() }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,15 +39,22 @@ class CompanyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ticker = arguments?.getString("ticker").toString()
+        initViewModel()
 
-        toolbar_company.apply {
-            title = ticker
+        company_toolbar.apply {
+            title = name
+            subtitle = ticker
             (activity as AppCompatActivity).setSupportActionBar(this)
+            (activity as AppCompatActivity).supportActionBar?.apply {
+                elevation = 0f
+                setDisplayHomeAsUpEnabled(true)
+                setDisplayShowHomeEnabled(true)
+            }
         }
 
-        viewpager_company.adapter = PagerAdapter(this)
-        TabLayoutMediator(tabs_company, viewpager_company) { tab, position ->
+        company_viewpager.adapter = PagerAdapter(this)
+        company_viewpager.offscreenPageLimit = 2
+        TabLayoutMediator(company_tabs, company_viewpager) { tab, position ->
             when (position) {
                 0 -> tab.text = "Профиль"
                 1 -> tab.text = "Детали"
@@ -44,6 +62,39 @@ class CompanyFragment : Fragment() {
             }
         }.attach()
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.company_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                requireActivity().onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun initViewModel() {
+        vm.loadQuote(ticker)
+        vm.quote.observe(viewLifecycleOwner, Observer {
+            tv_company_price.text = it[0].price.toString().plus("$")
+            tv_company_change.text = it[0].change.addSign()
+            tv_company_changesPercentage.text =
+                " (".plus(it[0].changesPercentage.toString()).plus("%)")
+
+            if (it[0].change > 0) {
+                tv_company_change.setTextColor(Color.parseColor("#4CAF50"))
+                tv_company_changesPercentage.setTextColor(Color.parseColor("#4CAF50"))
+            } else {
+                tv_company_change.setTextColor(Color.parseColor("#F44336"))
+                tv_company_changesPercentage.setTextColor(Color.parseColor("#F44336"))
+            }
+        })
     }
 
     inner class PagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {

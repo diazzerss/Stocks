@@ -10,8 +10,8 @@ import io.reactivex.schedulers.Schedulers
 
 class ChartViewModel : BaseViewModel() {
     private val graphicsRepository = ChartRepository
-    val graphicsLiveData: MutableLiveData<ArrayList<Graph>> = MutableLiveData()
     private val graphList = ArrayList<Graph>()
+    val graphLiveData: MutableLiveData<ArrayList<Graph>> = MutableLiveData()
 
     fun getChartData(ticker: String) {
         compositeDisposable.add(
@@ -19,13 +19,10 @@ class ChartViewModel : BaseViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap { Observable.fromIterable(it) }
-                .take(7)
-                .map{
-                        Graph(it.date, it.close.toFloat())
-                }
+                .take(27)
                 .subscribe({
                     graphList.add(it)
-                    graphicsLiveData.postValue(graphList)
+                    graphLiveData.postValue(graphList)
                 },
                     {
 

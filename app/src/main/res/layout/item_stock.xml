@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/stock_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -83,6 +83,8 @@
                 android:layout_marginEnd="@dimen/spacing_tiny_4"
                 android:layout_weight="1"
                 android:gravity="end|bottom"
+                android:lines="1"
+                app:autoSizeMinTextSize="@dimen/font_tiny_10"
                 app:autoSizeTextType="uniform"
                 tools:text="$-34.23" />
 
@@ -99,6 +101,7 @@
                 android:paddingStart="@dimen/spacing_super_tiny_2"
                 android:paddingEnd="@dimen/spacing_super_tiny_2"
                 android:textColor="@android:color/white"
+                app:autoSizeMinTextSize="@dimen/font_tiny_10"
                 app:autoSizeTextType="uniform"
                 tools:background="@color/colorChangesRed"
                 tools:text="-2.49%" />

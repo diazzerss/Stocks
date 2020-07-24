@@ -8,7 +8,7 @@ object TickerRepository {
 
     fun getTicker(query: String): Single<ArrayList<Ticker>> {
         return StockService
-            .create()
+            .getInstance()
             .getTicker(query)
     }
 

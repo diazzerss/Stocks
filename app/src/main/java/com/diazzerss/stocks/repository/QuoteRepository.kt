@@ -8,7 +8,7 @@ object QuoteRepository {
 
     fun getQuote(ticker: String): Observable<ArrayList<Quote>> {
         return StockService
-            .create()
+            .getInstance()
             .getQuote(ticker)
     }
 

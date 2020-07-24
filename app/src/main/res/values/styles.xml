@@ -19,7 +19,6 @@
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
-
     <style name="SearchView" parent="Widget.AppCompat.SearchView.ActionBar">
         <item name="android:maxWidth">9999dp</item>
         <item name="iconifiedByDefault">false</item>

@@ -9,7 +9,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 
 class SearchViewModel : BaseViewModel() {
@@ -32,16 +31,15 @@ class SearchViewModel : BaseViewModel() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
                         error.postValue(false)
-                        progress.postValue(true) }
+                        progress.postValue(true)
+                    }
                     .doAfterTerminate { progress.postValue(false) }
                     .subscribe({
                         error.postValue(false)
                         tickers.postValue(it)
                     },
                         {
-                            //TODO Fix
-                            tickers.postValue(ArrayList())
-                            error.postValue(true)
+
                         })
             })
 

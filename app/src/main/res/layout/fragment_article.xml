@@ -5,23 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="56dp"
-    tools:context=".ui.portfolio.PortfolioFragment">
+    tools:context=".ui.news.ArticleFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/portfolio_toolbar"
+            android:id="@+id/article_toolbar"
             style="@style/Toolbar"
-            app:title="@string/title_toolbar_portfolio" />
+            app:title="@string/title_toolbar_article" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/text_portfolio"
+    <ProgressBar
+        android:id="@+id/article_progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/font_large_24" />
+        android:indeterminate="true" />
+
+    <WebView
+        android:id="@+id/article_webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </LinearLayout>

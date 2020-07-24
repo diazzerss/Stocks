@@ -1,6 +1,6 @@
 package com.diazzerss.stocks.model
 
-data class Articles(
+data class News(
     val articles: ArrayList<Article>
 
 )

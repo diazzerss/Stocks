@@ -8,19 +8,19 @@ object StockRepository {
 
     fun getStockActive(): Observable<ArrayList<Stock>> {
         return StockService
-            .create()
+            .getInstance()
             .getTopActive()
     }
 
     fun getStockGainers(): Observable<ArrayList<Stock>> {
         return StockService
-            .create()
+            .getInstance()
             .getTopGainers()
     }
 
     fun getStockLosers(): Observable<ArrayList<Stock>> {
         return StockService
-            .create()
+            .getInstance()
             .getTopLosers()
     }
 }

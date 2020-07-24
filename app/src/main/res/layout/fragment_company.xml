@@ -1,32 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="56dp">
+    android:paddingBottom="56dp"
+    tools:context=".ui.company.CompanyFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_company"
+            android:id="@+id/company_toolbar"
             style="@style/Toolbar"
-            app:title="@string/title_toolbar_company">
-        </com.google.android.material.appbar.MaterialToolbar>
+            tools:title="@string/title_toolbar_company" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_small_8">
+
+            <TextView
+                android:id="@+id/tv_company_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_appbar_info_66"
+                android:layout_marginEnd="@dimen/spacing_small_8"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                tools:text="$1417.00" />
+
+            <TextView
+                android:id="@+id/tv_company_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small_8"
+                android:textSize="@dimen/font_normal_16"
+                tools:text="-96.07 "
+                tools:textColor="@color/colorChangesRed" />
+
+            <TextView
+                android:id="@+id/tv_company_changesPercentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_small_8"
+                android:textSize="@dimen/font_normal_16"
+                tools:text="(-6,35%)"
+                tools:textColor="@color/colorChangesRed" />
+
+        </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs_company"
+        android:id="@+id/company_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="fixed" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager_company"
+        android:id="@+id/company_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

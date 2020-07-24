@@ -4,18 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.diazzerss.stocks.R
 import com.diazzerss.stocks.databinding.FragmentProfileBinding
-import com.diazzerss.stocks.utils.addNullPlaceholder
+import com.diazzerss.stocks.utils.addNoDataPlaceholder
 import com.diazzerss.stocks.utils.getViewModel
-import kotlinx.android.synthetic.main.fragment_profile.view.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
 
     private val vm by lazy { getViewModel<ProfileViewModel>() }
-
-    lateinit var ticker: String
+    private val ticker by lazy { arguments?.getString("ticker").toString() }
 
     companion object {
         fun newInstance(ticker: String) = ProfileFragment().apply {
@@ -26,15 +27,12 @@ class ProfileFragment : Fragment() {
         }
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        ticker = arguments?.getString("ticker").toString()
 
         vm.getProfile(ticker)
-
 
         return FragmentProfileBinding.inflate(inflater, container, false).root
 
@@ -42,23 +40,36 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //TODO Fix ScrollView Collapsing
-        val name = view.tv_profile_name
-        val website = view.tv_profile_website
-        val exchange = view.tv_profile_exchange
-        val industry = view.tv_profile_industry
-        val sector = view.tv_profile_sector
-        val description = view.tv_profile_description
+
+        initViewModel()
+    }
+
+    private fun initViewModel() {
         vm.profileLiveData.observe(viewLifecycleOwner, Observer {
-            name.text = it[0].companyName.addNullPlaceholder()
-            website.text = it[0].website.addNullPlaceholder()
-            exchange.text = it[0].exchange.addNullPlaceholder()
-            industry.text = it[0].industry.addNullPlaceholder()
-            sector.text = it[0].sector.addNullPlaceholder()
-            description.text = it[0].description.addNullPlaceholder()
+            tv_profile_ceo.text = it[0].ceo.addNoDataPlaceholder()
+            tv_profile_address.text = getString(
+                R.string.profile_concat_address,
+                it[0].address,
+                it[0].state,
+                it[0].zip
+            )
+            tv_profile_country.text = it[0].country.addNoDataPlaceholder()
+            tv_profile_phone.text = it[0].phone.addNoDataPlaceholder()
+            tv_profile_website.text = it[0].website.addNoDataPlaceholder()
+            tv_profile_industry.text =
+                getString(R.string.profile_concat_industry, it[0].industry).addNoDataPlaceholder()
+            tv_profile_sector.text =
+                getString(R.string.profile_concat_sector, it[0].sector).addNoDataPlaceholder()
+            tv_profile_employees.text = getString(
+                R.string.profile_concat_employees,
+                it[0].fullTimeEmployees.toString()
+            ).addNoDataPlaceholder()
+            tv_profile_description.text = it[0].description.addNoDataPlaceholder()
         })
-
-
+        vm.progress.observe(viewLifecycleOwner, Observer {
+            profile_content.isVisible = !it
+            profile_progressBar.isVisible = it
+        })
     }
 
 }

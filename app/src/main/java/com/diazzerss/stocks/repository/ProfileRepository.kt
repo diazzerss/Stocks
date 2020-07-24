@@ -8,7 +8,7 @@ object ProfileRepository {
 
     fun getProfile(ticker:String): Observable<ArrayList<CompanyProfile>> {
         return StockService
-            .create()
+            .getInstance()
             .getCompanyProfile(ticker)
     }
 }

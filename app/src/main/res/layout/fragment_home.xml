@@ -31,6 +31,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/home_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -45,24 +46,14 @@
                     card_view:cardCornerRadius="8dp"
                     card_view:cardElevation="4dp">
 
-                    <LinearLayout
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_stock_active"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        tools:listitem="@layout/item_stock">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
+                    </androidx.recyclerview.widget.RecyclerView>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_stock_active"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            tools:listitem="@layout/item_stock">
-
-                        </androidx.recyclerview.widget.RecyclerView>
-                    </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -76,22 +67,11 @@
                     card_view:cardCornerRadius="8dp"
                     card_view:cardElevation="4dp">
 
-                    <LinearLayout
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_stock_gainers"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_stock_gainers"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            tools:listitem="@layout/item_stock" />
-                    </LinearLayout>
+                        tools:listitem="@layout/item_stock" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -105,22 +85,11 @@
                     card_view:cardCornerRadius="8dp"
                     card_view:cardElevation="4dp">
 
-                    <LinearLayout
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_stock_losers"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_stock_losers"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            tools:listitem="@layout/item_stock" />
-                    </LinearLayout>
+                        tools:listitem="@layout/item_stock" />
 
                 </com.google.android.material.card.MaterialCardView>
 

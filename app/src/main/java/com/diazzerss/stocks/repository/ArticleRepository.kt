@@ -1,13 +1,13 @@
 package com.diazzerss.stocks.repository
 
 import com.diazzerss.stocks.NewsService
-import com.diazzerss.stocks.model.Articles
+import com.diazzerss.stocks.model.News
 import io.reactivex.Observable
 
 object ArticleRepository {
-    fun getArticles(): Observable<Articles> {
+    fun getArticles(): Observable<News> {
         return NewsService
-            .create()
+            .getInstance()
             .getArticlesForTicker()
     }
 }

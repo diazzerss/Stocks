@@ -19,7 +19,12 @@
         android:id="@+id/navigation_news"
         android:name="com.diazzerss.stocks.ui.news.NewsFragment"
         android:label="@string/title_news"
-        tools:layout="@layout/fragment_news" />
+        tools:layout="@layout/fragment_news" >
+        <action
+            android:id="@+id/action_navigation_news_to_navigation_article"
+            app:destination="@id/navigation_article"
+            app:popUpTo="@id/navigation_news" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_portfolio"
@@ -36,7 +41,7 @@
         android:id="@+id/navigation_home"
         android:name="com.diazzerss.stocks.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_navigation_search_old"
             app:destination="@id/navigation_search_old"
@@ -44,4 +49,9 @@
             app:launchSingleTop="false"
             app:popUpTo="@id/navigation_home" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_article"
+        android:name="com.diazzerss.stocks.ui.news.ArticleFragment"
+        android:label="ArticleFragment" />
 </navigation>

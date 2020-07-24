@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.diazzerss.stocks.databinding.FragmentDetailsBinding
 import com.diazzerss.stocks.utils.getViewModel
 import kotlinx.android.synthetic.main.fragment_details.*
@@ -15,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_details.*
 class DetailsFragment : Fragment() {
 
     private val vm by lazy { getViewModel<DetailsViewModel>() }
-    lateinit var ticker: String
+    private val ticker by lazy { arguments?.getString("ticker").toString() }
     private var quoteAdapter: QuoteAdapter = QuoteAdapter()
 
     companion object {
@@ -31,8 +30,6 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        ticker = arguments?.getString("ticker").toString()
 
         initViewModel()
         return FragmentDetailsBinding.inflate(inflater, container, false).root

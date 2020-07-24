@@ -1,13 +1,13 @@
 package com.diazzerss.stocks.repository
 
 import com.diazzerss.stocks.StockService
-import com.diazzerss.stocks.model.GraphData
+import com.diazzerss.stocks.model.Graph
 import io.reactivex.Observable
 
 object ChartRepository {
-    fun getChartData1Hour(ticker:String): Observable<ArrayList<GraphData>> {
+    fun getChartData1Hour(ticker:String): Observable<ArrayList<Graph>> {
         return StockService
-            .create()
+            .getInstance()
             .getChartData1Hour(ticker)
     }
 }

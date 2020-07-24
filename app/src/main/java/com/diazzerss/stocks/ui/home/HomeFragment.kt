@@ -6,18 +6,20 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.diazzerss.stocks.BaseFragment
 import com.diazzerss.stocks.R
 import com.diazzerss.stocks.databinding.FragmentHomeBinding
+import com.diazzerss.stocks.model.Stock
 import com.diazzerss.stocks.utils.getViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : Fragment() {
 
     private val vm by lazy { getViewModel<HomeViewModel>() }
 
@@ -34,80 +36,36 @@ class HomeFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return FragmentHomeBinding.inflate(inflater, container, false).root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        home_toolbar.apply {
-            (activity as AppCompatActivity).setSupportActionBar(this)
-        }
+        (activity as AppCompatActivity).setSupportActionBar(home_toolbar)
 
-        rv_stock_active.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = stockActiveAdapter
-            isNestedScrollingEnabled = false
-            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
+        stockActiveAdapter.apply {
+            setHeader("Топ активных")
+            onItemClick = { openStockProfile(it) }
         }
-        rv_stock_gainers.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = stockGainersAdapter
-            isNestedScrollingEnabled = false
-            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
+        stockGainersAdapter.apply {
+            setHeader("Лидеры роста")
+            onItemClick = { openStockProfile(it) }
         }
-        rv_stock_losers.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = stockLosersAdapter
-            isNestedScrollingEnabled = false
-            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
-        }
-
-        stockActiveAdapter.setHeader("Топ активных")
-        stockActiveAdapter.onItemClick = { stock ->
-            Navigation
-                .findNavController(view)
-                .navigate(
-                    R.id.navigation_company_profile,
-                    bundleOf("ticker" to stock.ticker, "name" to stock.companyName)
-                )
-        }
-        stockGainersAdapter.setHeader("Лидеры роста")
-        stockGainersAdapter.onItemClick = { stock ->
-            Navigation
-                .findNavController(view)
-                .navigate(
-                    R.id.navigation_company_profile,
-                    bundleOf("ticker" to stock.ticker, "name" to stock.companyName)
-                )
-        }
-        stockLosersAdapter.setHeader("Лидеры падения")
-        stockLosersAdapter.onItemClick = { stock ->
-            Navigation
-                .findNavController(view)
-                .navigate(
-                    R.id.navigation_company_profile,
-                    bundleOf("ticker" to stock.ticker, "name" to stock.companyName)
-                )
+        stockLosersAdapter.apply {
+            setHeader("Лидеры падения")
+            onItemClick = { openStockProfile(it) }
         }
 
         home_refreshContainer.apply {
             setColorSchemeResources(R.color.colorPrimary)
             setOnRefreshListener {
-                stockActiveAdapter.clearData()
-                stockGainersAdapter.clearData()
-                stockLosersAdapter.clearData()
                 initViewModel()
-
             }
-
-            initViewModel()
-
-
         }
 
+        initRecyclerView()
+        initViewModel()
 
     }
 
@@ -116,6 +74,7 @@ class HomeFragment : BaseFragment() {
         inflater.inflate(R.menu.home_menu, menu)
         menu.findItem(R.id.home_search).apply {
             setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+
                 override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                     return false
                 }
@@ -123,9 +82,7 @@ class HomeFragment : BaseFragment() {
                 override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
                     return false
                 }
-
             })
-
             actionView as SearchView
         }
 
@@ -144,6 +101,38 @@ class HomeFragment : BaseFragment() {
 
     }
 
+    private fun initRecyclerView() {
+        rv_stock_active.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = stockActiveAdapter
+            isNestedScrollingEnabled = false
+            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
+        }
+        rv_stock_gainers.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = stockGainersAdapter
+            isNestedScrollingEnabled = false
+            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
+        }
+        rv_stock_losers.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = stockLosersAdapter
+            isNestedScrollingEnabled = false
+            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
+        }
+    }
+
+
+    private fun openStockProfile(stock: Stock) {
+        Navigation
+            .findNavController(requireActivity(), R.id.nav_host_fragment)
+            .navigate(
+                R.id.navigation_company_profile,
+                bundleOf("ticker" to stock.ticker, "name" to stock.companyName)
+            )
+    }
+
+
     private fun initViewModel() {
 
         vm.loadStockActive()
@@ -153,35 +142,21 @@ class HomeFragment : BaseFragment() {
         vm.stockActive.observe(viewLifecycleOwner, Observer {
             stockActiveAdapter.addData(it)
         })
-
         vm.stockGainers.observe(viewLifecycleOwner, Observer {
             stockGainersAdapter.addData(it)
         })
-
         vm.stockLosers.observe(viewLifecycleOwner, Observer {
             stockLosersAdapter.addData(it)
         })
-
         vm.progress.observe(viewLifecycleOwner, Observer {
-            showProgress(it)
+            home_content.isVisible = !it
+            home_refreshContainer.isRefreshing = it
         })
         vm.error.observe(viewLifecycleOwner, Observer {
             //showError(it)
         })
 
-
     }
 
-    override fun showContent() {
-        super.showContent()
-    }
 
-    override fun showProgress(progress: Boolean) {
-        super.showProgress(progress)
-        home_refreshContainer.isRefreshing = progress
-    }
-
-    override fun showError(error: Boolean) {
-        super.showError(error)
-    }
 }

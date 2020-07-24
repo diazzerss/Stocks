@@ -25,9 +25,9 @@ class TickerAdapter : RecyclerView.Adapter<TickerAdapter.TickerViewHolder>() {
     inner class TickerViewHolder(itemTickerBinding: ItemTickerBinding) :
         RecyclerView.ViewHolder(itemTickerBinding.root) {
         val initials: TextView = itemTickerBinding.tvTickerInitials
-        var symbol: TextView = itemTickerBinding.tvTickerSymbol
-        var name: TextView = itemTickerBinding.tvTickerName
-
+        val name: TextView = itemTickerBinding.tvTickerName
+        val symbol: TextView = itemTickerBinding.tvTickerSymbol
+        val exchange: TextView = itemTickerBinding.tvTickerExchange
 
         init {
             itemView.setOnClickListener {
@@ -46,8 +46,9 @@ class TickerAdapter : RecyclerView.Adapter<TickerAdapter.TickerViewHolder>() {
     override fun onBindViewHolder(holder: TickerViewHolder, position: Int) {
         holder.initials.text =
             tickerArrayList[position].symbol.trim().getOrNull(0)?.toUpperCase().toString()
-        holder.symbol.text = tickerArrayList[position].symbol
         holder.name.text = tickerArrayList[position].name
+        holder.symbol.text = tickerArrayList[position].symbol
+        holder.exchange.text = tickerArrayList[position].exchangeShortName
     }
 
     override fun getItemCount(): Int {

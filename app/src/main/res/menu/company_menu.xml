@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/company_addToPortfolio"
+        android:icon="@drawable/ic_add_to_portfolio_white_24dp"
+        android:title="@string/title_add_to_portfolio"
+        app:showAsAction="ifRoom" />
+    <!--TODO
+    <item
+        android:id="@+id/company_addNotification"
+        android:icon="@drawable/ic_add_notification_white_24dp"
+        android:title="@string/title_add_notification"
+        app:showAsAction="ifRoom"/>
+        -->
+</menu>
