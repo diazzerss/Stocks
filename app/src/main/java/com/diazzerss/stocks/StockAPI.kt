@@ -8,7 +8,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**For testing purposes only*/
-private const val key = "0efa8c0367e6946ebc8a8c5833f5f775"
+private const val key = "1745d59c7bab90cc2f39ff045df998e6"
 
 interface StockAPI {
 
@@ -16,19 +16,19 @@ interface StockAPI {
     fun getTicker(@Query("query") query: String): Single<ArrayList<Ticker>>
 
     @GET("profile/{ticker}?apikey=$key")
-    fun getCompanyProfile(@Path("ticker") ticker: String): Observable<ArrayList<CompanyProfile>>
+    fun getCompanyProfile(@Path("ticker") ticker: String): Single<ArrayList<CompanyProfile>>
 
     @GET("quote/{ticker}?apikey=$key")
-    fun getQuote(@Path("ticker") ticker: String): Observable<ArrayList<Quote>>
+    fun getQuote(@Path("ticker") ticker: String): Single<ArrayList<Quote>>
 
     @GET("actives?apikey=$key")
-    fun getTopActive(): Observable<ArrayList<Stock>>
+    fun getTopActive(): Single<ArrayList<Stock>>
 
     @GET("gainers?apikey=$key")
-    fun getTopGainers(): Observable<ArrayList<Stock>>
+    fun getTopGainers(): Single<ArrayList<Stock>>
 
     @GET("losers?apikey=$key")
-    fun getTopLosers(): Observable<ArrayList<Stock>>
+    fun getTopLosers(): Single<ArrayList<Stock>>
 
     @GET("historical-chart/15min/{ticker}?apikey=$key")
     fun getChartData1Hour(@Path("ticker") ticker: String): Observable<ArrayList<Graph>>

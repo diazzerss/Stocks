@@ -41,11 +41,11 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initViewModel()
+        bindViewModel()
     }
 
-    private fun initViewModel() {
-        vm.profileLiveData.observe(viewLifecycleOwner, Observer {
+    private fun bindViewModel() {
+        vm.profile.observe(viewLifecycleOwner, Observer {
             tv_profile_ceo.text = it[0].ceo.addNoDataPlaceholder()
             tv_profile_address.text = getString(
                 R.string.profile_concat_address,

@@ -48,13 +48,13 @@ class ChartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        initViewModel()
+        bindViewModel()
         return FragmentChartBinding.inflate(inflater, container, false).root
     }
 
-    private fun initViewModel() {
+    private fun bindViewModel() {
         vm.getChartData(ticker)
-        vm.graphLiveData.observe(viewLifecycleOwner, Observer {
+        vm.graph.observe(viewLifecycleOwner, Observer {
             chartInit(it)
         })
 

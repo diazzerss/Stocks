@@ -1,5 +1,6 @@
 package com.diazzerss.stocks.ui.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.diazzerss.stocks.BaseViewModel
 import com.diazzerss.stocks.model.Stock
@@ -9,10 +10,21 @@ import io.reactivex.schedulers.Schedulers
 
 class HomeViewModel : BaseViewModel() {
 
-    val stockActive: MutableLiveData<ArrayList<Stock>> = MutableLiveData()
-    val stockGainers: MutableLiveData<ArrayList<Stock>> = MutableLiveData()
-    val stockLosers: MutableLiveData<ArrayList<Stock>> = MutableLiveData()
     private val repository: StockRepository = StockRepository
+
+    private val _stockActive: MutableLiveData<ArrayList<Stock>> = MutableLiveData()
+    val stockActive: LiveData<ArrayList<Stock>> = _stockActive
+    private val _stockGainers: MutableLiveData<ArrayList<Stock>> = MutableLiveData()
+    val stockGainers: LiveData<ArrayList<Stock>> = _stockGainers
+    private val _stockLosers: MutableLiveData<ArrayList<Stock>> = MutableLiveData()
+    val stockLosers: LiveData<ArrayList<Stock>> = _stockLosers
+
+
+    init {
+        loadStockActive()
+        loadStockGainers()
+        loadStockLosers()
+    }
 
     fun loadStockActive() {
         compositeDisposable.add(
@@ -21,11 +33,12 @@ class HomeViewModel : BaseViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
                     error.postValue(false)
-                    progress.postValue(true) }
+                    progress.postValue(true)
+                }
                 .doAfterTerminate { progress.postValue(false) }
                 .subscribe({
                     error.postValue(false)
-                    stockActive.postValue(it)
+                    _stockActive.postValue(it)
                 }, {
                     it.printStackTrace()
                 })
@@ -38,7 +51,7 @@ class HomeViewModel : BaseViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    stockGainers.postValue(it)
+                    _stockGainers.postValue(it)
                 }, {
                     it.printStackTrace()
                 })
@@ -51,7 +64,7 @@ class HomeViewModel : BaseViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    stockLosers.postValue(it)
+                    _stockLosers.postValue(it)
                 }, {
                     it.printStackTrace()
                 })

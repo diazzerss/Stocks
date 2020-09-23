@@ -1,5 +1,6 @@
 package com.diazzerss.stocks.ui.search
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.diazzerss.stocks.BaseViewModel
 import com.diazzerss.stocks.model.Ticker
@@ -9,11 +10,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 
 class SearchViewModel : BaseViewModel() {
 
-    val tickers: MutableLiveData<ArrayList<Ticker>> = MutableLiveData()
+    private val _ticker: MutableLiveData<ArrayList<Ticker>> = MutableLiveData()
+    val ticker: LiveData<ArrayList<Ticker>> = _ticker
 
     private val repository: TickerRepository = TickerRepository
 
@@ -36,7 +39,7 @@ class SearchViewModel : BaseViewModel() {
                     .doAfterTerminate { progress.postValue(false) }
                     .subscribe({
                         error.postValue(false)
-                        tickers.postValue(it)
+                        _ticker.postValue(it)
                     },
                         {
 

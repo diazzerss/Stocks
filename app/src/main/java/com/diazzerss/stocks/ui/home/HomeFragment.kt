@@ -60,12 +60,15 @@ class HomeFragment : Fragment() {
         home_refreshContainer.apply {
             setColorSchemeResources(R.color.colorPrimary)
             setOnRefreshListener {
-                initViewModel()
+                //TODO
+                vm.loadStockActive()
+                vm.loadStockGainers()
+                vm.loadStockLosers()
             }
         }
 
         initRecyclerView()
-        initViewModel()
+        bindViewModel()
 
     }
 
@@ -133,11 +136,7 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun initViewModel() {
-
-        vm.loadStockActive()
-        vm.loadStockGainers()
-        vm.loadStockLosers()
+    private fun bindViewModel() {
 
         vm.stockActive.observe(viewLifecycleOwner, Observer {
             stockActiveAdapter.addData(it)

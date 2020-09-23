@@ -81,7 +81,7 @@ class SearchFragment : Fragment() {
                 )
         }
 
-        initViewModel()
+        bindViewModel()
 
     }
 
@@ -106,9 +106,9 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun initViewModel() {
+    private fun bindViewModel() {
 
-        vm.tickers.observe(viewLifecycleOwner, Observer {
+        vm.ticker.observe(viewLifecycleOwner, Observer {
             tickerAdapter.addData(it)
         })
 

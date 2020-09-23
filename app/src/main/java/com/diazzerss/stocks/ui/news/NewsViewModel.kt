@@ -1,5 +1,6 @@
 package com.diazzerss.stocks.ui.news
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.diazzerss.stocks.BaseViewModel
 import com.diazzerss.stocks.model.Article
@@ -8,8 +9,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class NewsViewModel : BaseViewModel() {
-    val article: MutableLiveData <ArrayList<Article>> = MutableLiveData()
+    private val _article: MutableLiveData<ArrayList<Article>> = MutableLiveData()
+    val article: LiveData<ArrayList<Article>> = _article
     private val repository: ArticleRepository = ArticleRepository
+
+    init {
+        getArticles()
+    }
+
     fun getArticles() {
         compositeDisposable.add(
             repository.getArticles()
@@ -25,7 +32,7 @@ class NewsViewModel : BaseViewModel() {
                 }
                 .subscribe({
                     error.postValue(false)
-                    article.postValue(it)
+                    _article.postValue(it)
                 }, {
                     it.printStackTrace()
                 })

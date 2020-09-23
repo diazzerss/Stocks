@@ -47,18 +47,17 @@ class NewsFragment : Fragment() {
         news_refreshContainer.apply {
             setColorSchemeResources(R.color.colorPrimary)
             setOnRefreshListener {
-                initViewModel()
+                vm.getArticles()
 
             }
 
 
         }
-        initViewModel()
+        bindViewModel()
 
     }
 
-    private fun initViewModel() {
-        vm.getArticles()
+    private fun bindViewModel() {
         vm.article.observe(viewLifecycleOwner, Observer {
             newsAdapter.addData(it)
         })
