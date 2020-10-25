@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.diazzerss.stocks.BaseViewModelFactory
+import com.diazzerss.stocks.presentation.BaseViewModelFactory
 import java.text.DecimalFormat
 
 fun Double.addSign(): String {

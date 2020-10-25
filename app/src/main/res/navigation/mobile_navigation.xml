@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_search_old"
-        android:name="com.diazzerss.stocks.ui.search.SearchFragment"
+        android:name="com.diazzerss.stocks.presentation.search.SearchFragment"
         android:label="@string/title_home">
         <action
             android:id="@+id/action_navigation_home_to_companyProfileFragment"
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_news"
-        android:name="com.diazzerss.stocks.ui.news.NewsFragment"
+        android:name="com.diazzerss.stocks.presentation.news.NewsFragment"
         android:label="@string/title_news"
         tools:layout="@layout/fragment_news" >
         <action
@@ -28,18 +28,18 @@
 
     <fragment
         android:id="@+id/navigation_portfolio"
-        android:name="com.diazzerss.stocks.ui.portfolio.PortfolioFragment"
+        android:name="com.diazzerss.stocks.presentation.portfolio.PortfolioFragment"
         android:label="@string/title_portfolio"
         tools:layout="@layout/fragment_portfolio" />
 
     <fragment
         android:id="@+id/navigation_company_profile"
-        android:name="com.diazzerss.stocks.ui.company.CompanyFragment"
+        android:name="com.diazzerss.stocks.presentation.company.CompanyFragment"
         android:label="@string/title_company_profile"
         tools:layout="@layout/fragment_company" />
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.diazzerss.stocks.ui.home.HomeFragment"
+        android:name="com.diazzerss.stocks.presentation.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -52,6 +52,6 @@
 
     <fragment
         android:id="@+id/navigation_article"
-        android:name="com.diazzerss.stocks.ui.news.ArticleFragment"
+        android:name="com.diazzerss.stocks.presentation.news.ArticleFragment"
         android:label="ArticleFragment" />
 </navigation>
