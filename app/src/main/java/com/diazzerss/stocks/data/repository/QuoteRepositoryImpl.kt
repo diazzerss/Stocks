@@ -8,7 +8,7 @@ class QuoteRepositoryImpl : QuoteRepository {
 
     override suspend fun getQuote(ticker: String): ArrayList<Quote> {
         return StockService
-                .getInstance()
+                .instance
                 .getQuote(ticker)
     }
 

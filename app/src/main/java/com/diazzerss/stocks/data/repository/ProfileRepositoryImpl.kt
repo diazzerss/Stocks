@@ -8,7 +8,7 @@ class ProfileRepositoryImpl : ProfileRepository {
 
     override suspend fun getProfile(ticker: String): ArrayList<CompanyProfile> {
         return StockService
-                .getInstance()
+                .instance
                 .getCompanyProfile(ticker)
     }
 }

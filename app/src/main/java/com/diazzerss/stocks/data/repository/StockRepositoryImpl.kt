@@ -8,19 +8,19 @@ class StockRepositoryImpl:StockRepository {
 
      override suspend fun getStockActive(): ArrayList<Stock> {
         return StockService
-                .getInstance()
+                .instance
                 .getTopActive()
     }
 
     override suspend fun getStockGainers(): ArrayList<Stock> {
         return StockService
-                .getInstance()
+                .instance
                 .getTopGainers()
     }
 
     override suspend fun getStockLosers(): ArrayList<Stock> {
         return StockService
-                .getInstance()
+                .instance
                 .getTopLosers()
     }
 }

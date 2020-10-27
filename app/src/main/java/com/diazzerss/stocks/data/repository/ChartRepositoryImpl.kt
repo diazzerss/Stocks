@@ -8,7 +8,7 @@ import io.reactivex.Observable
 class ChartRepositoryImpl : ChartRepository {
     override fun getChartData1Hour(ticker: String): Observable<ArrayList<Graph>> {
         return StockService
-                .getInstance()
+                .instance
                 .getChartData1Hour(ticker)
     }
 }

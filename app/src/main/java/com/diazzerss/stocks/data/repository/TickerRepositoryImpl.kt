@@ -9,7 +9,7 @@ class TickerRepositoryImpl:TickerRepository {
 
     override fun getTicker(query: String): Single<ArrayList<Ticker>> {
         return StockService
-            .getInstance()
+            .instance
             .getTicker(query)
     }
 

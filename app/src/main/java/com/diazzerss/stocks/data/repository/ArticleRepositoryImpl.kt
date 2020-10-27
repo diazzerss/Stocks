@@ -6,7 +6,7 @@ import com.diazzerss.stocks.domain.repository.ArticleRepository
 
 class ArticleRepositoryImpl : ArticleRepository {
     override suspend fun getArticles(): News {
-        return NewsService.getInstance().getArticlesForTicker()
+        return NewsService.instance.getArticlesForTicker()
     }
 
 }

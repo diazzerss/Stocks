@@ -6,15 +6,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object StockService {
 
-    private val retrofit = Retrofit.Builder()
+    val instance: StockAPI = Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("https://fmpcloud.io/api/v3/")
             .build()
             .create(StockAPI::class.java)
-
-    fun getInstance(): StockAPI {
-        return retrofit
-    }
 
 }
