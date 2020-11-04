@@ -8,7 +8,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 
-interface StockAPI {
+interface StockApiInterface {
 
     @GET("search?limit=10&apikey=eae36d88054b1fcf0f6d4e3f20b7aa7b")
     fun getTicker(@Query("query") query: String): Single<ArrayList<Ticker>>

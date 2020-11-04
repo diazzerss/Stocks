@@ -1,4 +1,4 @@
-package com.diazzerss.stocks.presentation
+package com.diazzerss.stocks
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
