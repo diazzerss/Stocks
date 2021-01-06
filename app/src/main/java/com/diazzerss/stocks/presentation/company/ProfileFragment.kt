@@ -11,9 +11,11 @@ import com.diazzerss.stocks.R
 import com.diazzerss.stocks.databinding.FragmentProfileBinding
 import com.diazzerss.stocks.utils.addNoDataPlaceholder
 import com.diazzerss.stocks.utils.getViewModel
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
+
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
 
     private val vm by lazy { getViewModel<ProfileViewModel>() }
     private val ticker by lazy { arguments?.getString("ticker").toString() }
@@ -28,13 +30,13 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
 
         vm.getProfile(ticker)
-
-        return FragmentProfileBinding.inflate(inflater, container, false).root
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
 
     }
 
@@ -44,31 +46,36 @@ class ProfileFragment : Fragment() {
         bindViewModel()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun bindViewModel() {
         vm.profile.observe(viewLifecycleOwner, Observer {
-            tv_profile_ceo.text = it[0].ceo.addNoDataPlaceholder()
-            tv_profile_address.text = getString(
-                R.string.profile_concat_address,
-                it[0].address,
-                it[0].state,
-                it[0].zip
+            binding.tvProfileCeo.text = it[0].ceo.addNoDataPlaceholder()
+            binding.tvProfileAddress.text = getString(
+                    R.string.profile_concat_address,
+                    it[0].address,
+                    it[0].state,
+                    it[0].zip
             )
-            tv_profile_country.text = it[0].country.addNoDataPlaceholder()
-            tv_profile_phone.text = it[0].phone.addNoDataPlaceholder()
-            tv_profile_website.text = it[0].website.addNoDataPlaceholder()
-            tv_profile_industry.text =
-                getString(R.string.profile_concat_industry, it[0].industry).addNoDataPlaceholder()
-            tv_profile_sector.text =
-                getString(R.string.profile_concat_sector, it[0].sector).addNoDataPlaceholder()
-            tv_profile_employees.text = getString(
-                R.string.profile_concat_employees,
-                it[0].fullTimeEmployees.toString()
+            binding.tvProfileCountry.text = it[0].country.addNoDataPlaceholder()
+            binding.tvProfilePhone.text = it[0].phone.addNoDataPlaceholder()
+            binding.tvProfileWebsite.text = it[0].website.addNoDataPlaceholder()
+            binding.tvProfileIndustry.text =
+                    getString(R.string.profile_concat_industry, it[0].industry).addNoDataPlaceholder()
+            binding.tvProfileSector.text =
+                    getString(R.string.profile_concat_sector, it[0].sector).addNoDataPlaceholder()
+            binding.tvProfileEmployees.text = getString(
+                    R.string.profile_concat_employees,
+                    it[0].fullTimeEmployees.toString()
             ).addNoDataPlaceholder()
-            tv_profile_description.text = it[0].description.addNoDataPlaceholder()
+            binding.tvProfileDescription.text = it[0].description.addNoDataPlaceholder()
         })
         vm.progress.observe(viewLifecycleOwner, Observer {
-            profile_content.isVisible = !it
-            profile_progressBar.isVisible = it
+            binding.profileContent.isVisible = !it
+            binding.profileProgressBar.isVisible = it
         })
     }
 

@@ -11,13 +11,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.diazzerss.stocks.databinding.FragmentArticleBinding
-import kotlinx.android.synthetic.main.fragment_article.*
 
 class ArticleFragment : Fragment() {
+
+    private var _binding: FragmentArticleBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onCreateView(
@@ -25,24 +32,25 @@ class ArticleFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return FragmentArticleBinding.inflate(inflater, container, false).root
+        _binding = FragmentArticleBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as AppCompatActivity).apply {
-            setSupportActionBar(article_toolbar)
+            setSupportActionBar(binding.articleToolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setDisplayShowHomeEnabled(true)
 
         }
 
-        article_webView.apply {
+        binding.articleWebView.apply {
             settings.javaScriptEnabled = true
             webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
-                    article_progressBar?.isVisible = false
+                    binding.articleProgressBar.isVisible = false
                 }
             }
             arguments?.getString("url")?.let { loadUrl(it) }

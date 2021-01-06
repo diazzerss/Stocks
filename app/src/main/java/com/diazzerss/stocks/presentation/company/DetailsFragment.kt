@@ -9,9 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.diazzerss.stocks.databinding.FragmentDetailsBinding
 import com.diazzerss.stocks.utils.getViewModel
-import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment() {
+
+    private var _binding: FragmentDetailsBinding? = null
+    private val binding get() = _binding!!
 
     private val vm by lazy { getViewModel<DetailsViewModel>() }
     private val ticker by lazy { arguments?.getString("ticker").toString() }
@@ -27,18 +29,24 @@ class DetailsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
 
         initViewModel()
-        return FragmentDetailsBinding.inflate(inflater, container, false).root
+        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rv_details.apply {
+        binding.rvDetails.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = quoteAdapter
         }

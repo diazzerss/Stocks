@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.diazzerss.stocks.R
 import com.diazzerss.stocks.databinding.FragmentChartBinding
+import com.diazzerss.stocks.databinding.ViewMarkerBinding
 import com.diazzerss.stocks.domain.model.Graph
 import com.diazzerss.stocks.utils.getViewModel
 import com.github.mikephil.charting.charts.LineChart
@@ -23,14 +25,19 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
-import kotlinx.android.synthetic.main.fragment_chart.*
-import kotlinx.android.synthetic.main.view_marker.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class ChartFragment : Fragment() {
+
+    private var _binding: FragmentChartBinding? = null
+    private val binding get() = _binding!!
+
+    private var _binding2: ViewMarkerBinding? = null
+    private val binding2 get() = _binding2!!
+
 
     private val vm by lazy { getViewModel<ChartViewModel>() }
     private val ticker by lazy { arguments?.getString("ticker").toString() }
@@ -45,11 +52,18 @@ class ChartFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         bindViewModel()
-        return FragmentChartBinding.inflate(inflater, container, false).root
+        _binding = FragmentChartBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        _binding2 = null
     }
 
     private fun bindViewModel() {
@@ -84,31 +98,37 @@ class ChartFragment : Fragment() {
         }
 
         class CustomMarkerView(context: Context, layoutResource: Int) :
-            MarkerView(context, layoutResource) {
+                MarkerView(context, layoutResource) {
+
+
+            init {
+                _binding2 = ViewMarkerBinding.inflate(LayoutInflater.from(context))
+                addView(binding2.root)
+            }
 
             override fun refreshContent(e: Entry, highlight: Highlight) {
-                tv_marker_date.text =
-                    getString(R.string.marker_concat_date, date[highlight.x.toInt()])
-                tv_marker_open.text =
-                    getString(
-                        R.string.marker_concat_open,
-                        graphList[highlight.x.toInt()].open.toString()
-                    )
-                tv_marker_close.text = getString(
-                    R.string.marker_concat_close,
-                    graphList[highlight.x.toInt()].close.toString()
+                binding2.tvMarkerDate.text =
+                        getString(R.string.marker_concat_date, date[highlight.x.toInt()])
+                binding2.tvMarkerOpen.text =
+                        getString(
+                                R.string.marker_concat_open,
+                                graphList[highlight.x.toInt()].open.toString()
+                        )
+                binding2.tvMarkerClose.text = getString(
+                        R.string.marker_concat_close,
+                        graphList[highlight.x.toInt()].close.toString()
                 )
-                tv_marker_low.text = getString(
-                    R.string.marker_concat_low,
-                    graphList[highlight.x.toInt()].low.toString()
+                binding2.tvMarkerLow.text = getString(
+                        R.string.marker_concat_low,
+                        graphList[highlight.x.toInt()].low.toString()
                 )
-                tv_marker_high.text = getString(
-                    R.string.marker_concat_high,
-                    graphList[highlight.x.toInt()].high.toString()
+                binding2.tvMarkerHigh.text = getString(
+                        R.string.marker_concat_high,
+                        graphList[highlight.x.toInt()].high.toString()
                 )
-                tv_marker_volume.text = getString(
-                    R.string.marker_concat_volume,
-                    graphList[highlight.x.toInt()].volume.toString()
+                binding2.tvMarkerVolume.text = getString(
+                        R.string.marker_concat_volume,
+                        graphList[highlight.x.toInt()].volume.toString()
                 )
 
                 super.refreshContent(e, highlight)
@@ -130,7 +150,7 @@ class ChartFragment : Fragment() {
             }
         }
 
-        val chart: LineChart = graphics_lineChart
+        val chart: LineChart = binding.graphicsLineChart
         chart.apply {
             legend.isEnabled = false
             description.apply {

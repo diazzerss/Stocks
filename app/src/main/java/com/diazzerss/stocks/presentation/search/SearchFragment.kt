@@ -19,10 +19,12 @@ import com.diazzerss.stocks.databinding.FragmentSearchBinding
 import com.diazzerss.stocks.utils.getViewModel
 import com.diazzerss.stocks.utils.hideKeyboard
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
-import kotlinx.android.synthetic.main.fragment_search.*
 
 
 class SearchFragment : Fragment() {
+
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
 
     private val vm by lazy { getViewModel<SearchViewModel>() }
 
@@ -34,23 +36,30 @@ class SearchFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        return FragmentSearchBinding.inflate(inflater, container, false).root
+
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity).setSupportActionBar(search_toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(binding.searchToolbar)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
 
-        search_rv_ticker.apply {
+        binding.searchRvTicker.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = tickerAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
@@ -66,7 +75,7 @@ class SearchFragment : Fragment() {
 
         }
 
-        search_refreshContainer.apply {
+        binding.searchRefreshContainer.apply {
             setColorSchemeResources(R.color.colorPrimary)
             isEnabled = false
         }
@@ -74,11 +83,11 @@ class SearchFragment : Fragment() {
         tickerAdapter.onItemClick = { ticker ->
             hideKeyboard()
             Navigation
-                .findNavController(view)
-                .navigate(
-                    R.id.navigation_company_profile,
-                    bundleOf("ticker" to ticker.symbol, "name" to ticker.name)
-                )
+                    .findNavController(view)
+                    .navigate(
+                            R.id.navigation_company_profile,
+                            bundleOf("ticker" to ticker.symbol, "name" to ticker.name)
+                    )
         }
 
         bindViewModel()
@@ -113,8 +122,8 @@ class SearchFragment : Fragment() {
         })
 
         vm.progress.observe(viewLifecycleOwner, Observer {
-            search_refreshContainer.isRefreshing = it
-            search_rv_ticker.isVisible = !it
+            binding.searchRefreshContainer.isRefreshing = it
+            binding.searchRvTicker.isVisible = !it
 
         })
         vm.error.observe(viewLifecycleOwner, Observer {

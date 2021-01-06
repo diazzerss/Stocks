@@ -9,13 +9,14 @@ import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.diazzerss.stocks.R
 import com.diazzerss.stocks.databinding.FragmentCompanyBinding
-import com.diazzerss.stocks.utils.addSign
 import com.diazzerss.stocks.utils.getViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_company.*
 
 
 class CompanyFragment : Fragment() {
+
+    private var _binding: FragmentCompanyBinding? = null
+    private val binding get() = _binding!!
 
     private val ticker by lazy { arguments?.getString("ticker").toString() }
     private val name by lazy { arguments?.getString("name").toString() }
@@ -28,12 +29,17 @@ class CompanyFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentCompanyBinding.inflate(inflater, container, false)
+        return binding.root
 
-        return FragmentCompanyBinding.inflate(inflater, container, false).root
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,7 +47,7 @@ class CompanyFragment : Fragment() {
 
         initViewModel()
 
-        company_toolbar.apply {
+        binding.companyToolbar.apply {
             title = name
             subtitle = ticker
             (activity as AppCompatActivity).setSupportActionBar(this)
@@ -52,9 +58,9 @@ class CompanyFragment : Fragment() {
             }
         }
 
-        company_viewpager.adapter = PagerAdapter(this)
-        company_viewpager.offscreenPageLimit = 2
-        TabLayoutMediator(company_tabs, company_viewpager) { tab, position ->
+        binding.companyViewpager.adapter = PagerAdapter(this)
+        binding.companyViewpager.offscreenPageLimit = 2
+        TabLayoutMediator(binding.companyTabs, binding.companyViewpager) { tab, position ->
             when (position) {
                 0 -> tab.text = "Профиль"
                 1 -> tab.text = "Детали"
@@ -82,17 +88,18 @@ class CompanyFragment : Fragment() {
     private fun initViewModel() {
         vm.loadQuote(ticker)
         vm.quote.observe(viewLifecycleOwner, Observer {
-            tv_company_price.text = it[0].price.toString().plus("$")
-            tv_company_change.text = it[0].change.addSign()
-            tv_company_changesPercentage.text =
-                " (".plus(it[0].changesPercentage.toString()).plus("%)")
+            binding.tvCompanyPrice.text = it[0].price.toString().plus("$")
+            //TODO add sign
+            binding.tvCompanyChange.text = it[0].change.toString()
+            binding.tvCompanyChangesPercentage.text =
+                    " (".plus(it[0].changesPercentage.toString()).plus("%)")
 
             if (it[0].change > 0) {
-                tv_company_change.setTextColor(Color.parseColor("#4CAF50"))
-                tv_company_changesPercentage.setTextColor(Color.parseColor("#4CAF50"))
+                binding.tvCompanyChange.setTextColor(Color.parseColor("#4CAF50"))
+                binding.tvCompanyChangesPercentage.setTextColor(Color.parseColor("#4CAF50"))
             } else {
-                tv_company_change.setTextColor(Color.parseColor("#F44336"))
-                tv_company_changesPercentage.setTextColor(Color.parseColor("#F44336"))
+                binding.tvCompanyChange.setTextColor(Color.parseColor("#F44336"))
+                binding.tvCompanyChangesPercentage.setTextColor(Color.parseColor("#F44336"))
             }
         })
     }

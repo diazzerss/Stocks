@@ -17,10 +17,12 @@ import com.diazzerss.stocks.R
 import com.diazzerss.stocks.databinding.FragmentHomeBinding
 import com.diazzerss.stocks.domain.model.Stock
 import com.diazzerss.stocks.utils.getViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : Fragment() {
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     private val vm by lazy { getViewModel<HomeViewModel>() }
 
@@ -33,17 +35,24 @@ class HomeFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        return FragmentHomeBinding.inflate(inflater, container, false).root
+
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity).setSupportActionBar(home_toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(binding.homeToolbar)
 
         stockActiveAdapter.apply {
             setHeader("Топ активных")
@@ -58,7 +67,7 @@ class HomeFragment : Fragment() {
             onItemClick = { openStockProfile(it) }
         }
 
-        home_refreshContainer.apply {
+        binding.homeRefreshContainer.apply {
             setColorSchemeResources(R.color.colorPrimary)
             setOnRefreshListener {
                 vm.loadStocks()
@@ -94,7 +103,7 @@ class HomeFragment : Fragment() {
         return when (item.itemId) {
             R.id.home_search -> {
                 Navigation.findNavController(this.requireActivity(), R.id.nav_host_fragment)
-                    .navigate(R.id.action_navigation_home_to_navigation_search_old)
+                        .navigate(R.id.action_navigation_home_to_navigation_search_old)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -103,19 +112,19 @@ class HomeFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        rv_stock_active.apply {
+        binding.rvStockActive.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = stockActiveAdapter
             isNestedScrollingEnabled = false
             addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         }
-        rv_stock_gainers.apply {
+        binding.rvStockGainers.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = stockGainersAdapter
             isNestedScrollingEnabled = false
             addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         }
-        rv_stock_losers.apply {
+        binding.rvStockLosers.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = stockLosersAdapter
             isNestedScrollingEnabled = false
@@ -126,11 +135,11 @@ class HomeFragment : Fragment() {
 
     private fun openStockProfile(stock: Stock) {
         Navigation
-            .findNavController(requireActivity(), R.id.nav_host_fragment)
-            .navigate(
-                R.id.navigation_company_profile,
-                bundleOf("ticker" to stock.ticker, "name" to stock.companyName)
-            )
+                .findNavController(requireActivity(), R.id.nav_host_fragment)
+                .navigate(
+                        R.id.navigation_company_profile,
+                        bundleOf("ticker" to stock.ticker, "name" to stock.companyName)
+                )
     }
 
 
@@ -146,8 +155,8 @@ class HomeFragment : Fragment() {
             stockLosersAdapter.addData(it)
         })
         vm.progress.observe(viewLifecycleOwner, Observer {
-            home_content.isVisible = !it
-            home_refreshContainer.isRefreshing = it
+            binding.homeContent.isVisible = !it
+            binding.homeRefreshContainer.isRefreshing = it
         })
         vm.error.observe(viewLifecycleOwner, Observer {
             //TODO

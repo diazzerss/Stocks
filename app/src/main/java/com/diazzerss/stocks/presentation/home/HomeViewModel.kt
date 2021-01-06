@@ -3,9 +3,9 @@ package com.diazzerss.stocks.presentation.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.diazzerss.stocks.presentation.BaseViewModel
-import com.diazzerss.stocks.domain.model.Stock
 import com.diazzerss.stocks.data.repository.StockRepositoryImpl
+import com.diazzerss.stocks.domain.model.Stock
+import com.diazzerss.stocks.presentation.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

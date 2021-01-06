@@ -9,8 +9,7 @@ import com.diazzerss.stocks.R
 import com.diazzerss.stocks.databinding.ItemHeaderBinding
 import com.diazzerss.stocks.databinding.ItemStockBinding
 import com.diazzerss.stocks.domain.model.Stock
-import com.diazzerss.stocks.utils.addSign
-import com.diazzerss.stocks.utils.formatDouble
+import java.math.RoundingMode
 
 class StockAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -89,15 +88,16 @@ class StockAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             holder.initials.text = stock.ticker.trim().getOrNull(0)?.toUpperCase().toString()
             holder.name.text = stock.companyName
             holder.ticker.text = stock.ticker
-            holder.price.text = stock.price.formatDouble()
-            holder.changes.text = stock.changes.addSign()
+            holder.price.text = stock.price.setScale(2,RoundingMode.DOWN).toString().plus("$")
             holder.changesPercentage.text =
                 stock.changesPercentage.removePrefix("(").removeSuffix(")")
 
-            if (stock.changes > 0) {
+            if (stock.changes.signum() > 0) {
+                holder.changes.text = "+".plus(stock.changes.setScale(2,RoundingMode.DOWN).toString().plus("$"))
                 holder.changes.setTextColor(Color.parseColor("#4CAF50"))
                 holder.changesPercentage.setBackgroundResource(R.drawable.rounded_corner_green)
             } else {
+                holder.changes.text = stock.changes.setScale(2,RoundingMode.DOWN).toString().plus("$")
                 holder.changes.setTextColor(Color.parseColor("#F44336"))
                 holder.changesPercentage.setBackgroundResource(R.drawable.rounded_corner_red)
             }

@@ -9,16 +9,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.diazzerss.stocks.presentation.BaseViewModelFactory
-import java.text.DecimalFormat
-
-fun Double.addSign(): String {
-    return if (this > 0) "+".plus((DecimalFormat("#0.00").format(this)).plus("$"))
-    else (DecimalFormat("#0.00").format(this)).plus("$")
-}
-
-fun Double.formatDouble(): String {
-    return (DecimalFormat("#0.00").format(this)).plus("$")
-}
 
 fun String?.addNoDataPlaceholder(): String {
     return if (this.isNullOrEmpty()) "Нет данных"
@@ -31,8 +21,8 @@ inline fun <reified T : ViewModel> Fragment.getViewModel(noinline creator: (() -
         ViewModelProvider(this).get(T::class.java)
     else
         ViewModelProvider(
-            this,
-            BaseViewModelFactory(creator)
+                this,
+                BaseViewModelFactory(creator)
         ).get(T::class.java)
 }
 
@@ -41,8 +31,8 @@ inline fun <reified T : ViewModel> FragmentActivity.getViewModel(noinline creato
         ViewModelProvider(this).get(T::class.java)
     else
         ViewModelProvider(
-            this,
-            BaseViewModelFactory(creator)
+                this,
+                BaseViewModelFactory(creator)
         ).get(T::class.java)
 }
 
