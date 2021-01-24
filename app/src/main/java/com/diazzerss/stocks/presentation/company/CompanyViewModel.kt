@@ -1,18 +1,18 @@
 package com.diazzerss.stocks.presentation.company
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.diazzerss.stocks.presentation.BaseViewModel
 import com.diazzerss.stocks.data.repository.QuoteRepositoryImpl
 import com.diazzerss.stocks.domain.model.Quote
+import com.diazzerss.stocks.presentation.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CompanyViewModel : BaseViewModel() {
+class CompanyViewModel @ViewModelInject constructor(private val quoteRepositoryImpl: QuoteRepositoryImpl) : BaseViewModel() {
     private val _quote: MutableLiveData<ArrayList<Quote>> = MutableLiveData()
     val quote: LiveData<ArrayList<Quote>> = _quote
-    val repository: QuoteRepositoryImpl = QuoteRepositoryImpl()
 
     fun loadQuote(ticker: String) {
 
@@ -20,7 +20,7 @@ class CompanyViewModel : BaseViewModel() {
             progress.value = true
             launch(Dispatchers.IO) {
                 try {
-                    val quote = repository.getQuote(ticker)
+                    val quote = this@CompanyViewModel.quoteRepositoryImpl.getQuote(ticker)
                     _quote.postValue(quote)
                 } catch (ex: Throwable) {
                     progress.postValue(false)

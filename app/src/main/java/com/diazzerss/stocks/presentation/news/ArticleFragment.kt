@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.diazzerss.stocks.databinding.FragmentArticleBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 class ArticleFragment : Fragment() {
 

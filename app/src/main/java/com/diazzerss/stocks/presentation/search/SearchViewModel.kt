@@ -1,5 +1,6 @@
 package com.diazzerss.stocks.presentation.search
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.diazzerss.stocks.data.repository.TickerRepositoryImpl
@@ -13,12 +14,11 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class SearchViewModel : BaseViewModel() {
+class SearchViewModel @ViewModelInject constructor(private val tickerRepositoryImpl: TickerRepositoryImpl) : BaseViewModel() {
 
     private val _ticker: MutableLiveData<ArrayList<Ticker>> = MutableLiveData()
     val ticker: LiveData<ArrayList<Ticker>> = _ticker
 
-    private val repository: TickerRepositoryImpl = TickerRepositoryImpl()
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     fun loadTicker(observable: InitialValueObservable<CharSequence>) {
@@ -30,7 +30,7 @@ class SearchViewModel : BaseViewModel() {
                 .debounce(1000, TimeUnit.MILLISECONDS)
                 .filter { text -> text.isNotBlank() }
                 .subscribe { query ->
-                    repository.getTicker(query)
+                    tickerRepositoryImpl.getTicker(query)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .doOnSubscribe {

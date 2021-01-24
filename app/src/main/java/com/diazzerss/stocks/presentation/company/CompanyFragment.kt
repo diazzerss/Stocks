@@ -3,25 +3,27 @@ package com.diazzerss.stocks.presentation.company
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.diazzerss.stocks.R
 import com.diazzerss.stocks.databinding.FragmentCompanyBinding
-import com.diazzerss.stocks.utils.getViewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CompanyFragment : Fragment() {
+
+    private val vm: CompanyViewModel by viewModels()
 
     private var _binding: FragmentCompanyBinding? = null
     private val binding get() = _binding!!
 
     private val ticker by lazy { arguments?.getString("ticker").toString() }
     private val name by lazy { arguments?.getString("name").toString() }
-
-    private val vm by lazy { getViewModel<CompanyViewModel>() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +81,16 @@ class CompanyFragment : Fragment() {
         return when (item.itemId) {
             android.R.id.home -> {
                 requireActivity().onBackPressed()
+                true
+            }
+            R.id.company_addNotification -> {
+                //TODO Add notification
+                Toast.makeText(context, "Уведомление о цене", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.company_addToPortfolio -> {
+                //TODO Add stock to the portfolio
+                Toast.makeText(context, "Добавлено в портфель", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)

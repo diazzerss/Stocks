@@ -11,9 +11,10 @@ import com.diazzerss.stocks.databinding.ItemNewsBinding
 import com.diazzerss.stocks.domain.model.Article
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+class NewsAdapter @Inject constructor(): RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     private var newsArrayList = ArrayList<Article>()
     var onItemClick: ((Article) -> Unit)? = null

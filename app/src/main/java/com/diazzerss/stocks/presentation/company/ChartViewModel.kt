@@ -1,5 +1,6 @@
 package com.diazzerss.stocks.presentation.company
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.diazzerss.stocks.data.repository.ChartRepositoryImpl
@@ -10,8 +11,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class ChartViewModel : BaseViewModel() {
-    private val graphicsRepository = ChartRepositoryImpl()
+class ChartViewModel @ViewModelInject constructor(private val chartRepositoryImpl: ChartRepositoryImpl) : BaseViewModel() {
+
     private val graphList = ArrayList<Graph>()
     private val _graph: MutableLiveData<ArrayList<Graph>> = MutableLiveData()
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -19,7 +20,7 @@ class ChartViewModel : BaseViewModel() {
 
     fun getChartData(ticker: String) {
 
-        compositeDisposable.add(graphicsRepository.getChartData1Hour(ticker)
+        compositeDisposable.add(chartRepositoryImpl.getChartData1Hour(ticker)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap { Observable.fromIterable(it) }

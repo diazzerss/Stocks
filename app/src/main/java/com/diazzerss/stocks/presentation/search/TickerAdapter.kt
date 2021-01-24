@@ -6,8 +6,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.diazzerss.stocks.databinding.ItemTickerBinding
 import com.diazzerss.stocks.domain.model.Ticker
+import javax.inject.Inject
 
-class TickerAdapter : RecyclerView.Adapter<TickerAdapter.TickerViewHolder>() {
+class TickerAdapter @Inject constructor() : RecyclerView.Adapter<TickerAdapter.TickerViewHolder>() {
 
     private var tickerArrayList = ArrayList<Ticker>()
     var onItemClick: ((Ticker) -> Unit)? = null
@@ -23,7 +24,7 @@ class TickerAdapter : RecyclerView.Adapter<TickerAdapter.TickerViewHolder>() {
     }
 
     inner class TickerViewHolder(itemTickerBinding: ItemTickerBinding) :
-        RecyclerView.ViewHolder(itemTickerBinding.root) {
+            RecyclerView.ViewHolder(itemTickerBinding.root) {
         val initials: TextView = itemTickerBinding.tvTickerInitials
         val name: TextView = itemTickerBinding.tvTickerName
         val symbol: TextView = itemTickerBinding.tvTickerSymbol
@@ -45,7 +46,7 @@ class TickerAdapter : RecyclerView.Adapter<TickerAdapter.TickerViewHolder>() {
 
     override fun onBindViewHolder(holder: TickerViewHolder, position: Int) {
         holder.initials.text =
-            tickerArrayList[position].symbol.trim().getOrNull(0)?.toUpperCase().toString()
+                tickerArrayList[position].symbol.trim().getOrNull(0)?.toUpperCase().toString()
         holder.name.text = tickerArrayList[position].name
         holder.symbol.text = tickerArrayList[position].symbol
         holder.exchange.text = tickerArrayList[position].exchangeShortName

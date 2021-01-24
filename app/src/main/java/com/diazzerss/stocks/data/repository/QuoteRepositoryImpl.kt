@@ -1,17 +1,16 @@
 package com.diazzerss.stocks.data.repository
 
-import com.diazzerss.stocks.data.api.StockApiInterface
+import com.diazzerss.stocks.data.api.StockApi
 import com.diazzerss.stocks.domain.model.Quote
 import com.diazzerss.stocks.domain.repository.QuoteRepository
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import javax.inject.Inject
 
-class QuoteRepositoryImpl : QuoteRepository, KoinComponent {
+class QuoteRepositoryImpl @Inject constructor() : QuoteRepository {
 
-    private val stockServiceClient: StockApiInterface by inject()
-
+    @Inject
+    lateinit var stockApi: StockApi
     override suspend fun getQuote(ticker: String): ArrayList<Quote> {
-        return stockServiceClient.getQuote(ticker)
+        return stockApi.getQuote(ticker)
     }
 
 }

@@ -4,17 +4,16 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.diazzerss.stocks.R
 import com.diazzerss.stocks.databinding.FragmentChartBinding
 import com.diazzerss.stocks.databinding.ViewMarkerBinding
 import com.diazzerss.stocks.domain.model.Graph
-import com.diazzerss.stocks.utils.getViewModel
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.MarkerView
@@ -25,11 +24,12 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-
+@AndroidEntryPoint
 class ChartFragment : Fragment() {
 
     private var _binding: FragmentChartBinding? = null
@@ -39,7 +39,7 @@ class ChartFragment : Fragment() {
     private val binding2 get() = _binding2!!
 
 
-    private val vm by lazy { getViewModel<ChartViewModel>() }
+    private val vm: ChartViewModel by viewModels()
     private val ticker by lazy { arguments?.getString("ticker").toString() }
 
     companion object {

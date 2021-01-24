@@ -1,18 +1,19 @@
 package com.diazzerss.stocks.data.repository
 
-import com.diazzerss.stocks.data.api.StockApiInterface
+import com.diazzerss.stocks.data.api.StockApi
 import com.diazzerss.stocks.domain.model.Ticker
 import com.diazzerss.stocks.domain.repository.TickerRepository
 import io.reactivex.Single
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import javax.inject.Inject
 
-class TickerRepositoryImpl : TickerRepository, KoinComponent {
+class TickerRepositoryImpl @Inject constructor() : TickerRepository {
 
-    private val stockServiceClient: StockApiInterface by inject()
+
+    @Inject
+    lateinit var stockApi: StockApi
 
     override fun getTicker(query: String): Single<ArrayList<Ticker>> {
-        return stockServiceClient.getTicker(query)
+        return stockApi.getTicker(query)
     }
 
 

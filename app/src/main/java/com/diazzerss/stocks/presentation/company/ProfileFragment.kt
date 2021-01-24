@@ -6,18 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.diazzerss.stocks.R
 import com.diazzerss.stocks.databinding.FragmentProfileBinding
 import com.diazzerss.stocks.utils.addNoDataPlaceholder
-import com.diazzerss.stocks.utils.getViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
+
+    private val vm: ProfileViewModel by viewModels()
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val vm by lazy { getViewModel<ProfileViewModel>() }
     private val ticker by lazy { arguments?.getString("ticker").toString() }
 
     companion object {

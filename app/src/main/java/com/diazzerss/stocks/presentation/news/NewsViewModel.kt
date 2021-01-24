@@ -1,18 +1,18 @@
 package com.diazzerss.stocks.presentation.news
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.diazzerss.stocks.presentation.BaseViewModel
+import com.diazzerss.stocks.data.repository.NewsRepositoryImpl
 import com.diazzerss.stocks.domain.model.Article
-import com.diazzerss.stocks.data.repository.ArticleRepositoryImpl
+import com.diazzerss.stocks.presentation.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class NewsViewModel : BaseViewModel() {
+class NewsViewModel @ViewModelInject constructor(private val newsRepositoryImpl: NewsRepositoryImpl) : BaseViewModel() {
     private val _article: MutableLiveData<ArrayList<Article>> = MutableLiveData()
     val article: LiveData<ArrayList<Article>> = _article
-    private val repository = ArticleRepositoryImpl()
 
     init {
         getArticles()
@@ -24,7 +24,7 @@ class NewsViewModel : BaseViewModel() {
             progress.value = true
             launch(Dispatchers.IO) {
                 try {
-                    val articles = repository.getArticles().articles
+                    val articles = newsRepositoryImpl.getNews().articles
                     _article.postValue(articles)
                 } catch (ex: Throwable) {
                     progress.postValue(false)

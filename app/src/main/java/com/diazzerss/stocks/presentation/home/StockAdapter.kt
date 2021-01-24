@@ -10,8 +10,9 @@ import com.diazzerss.stocks.databinding.ItemHeaderBinding
 import com.diazzerss.stocks.databinding.ItemStockBinding
 import com.diazzerss.stocks.domain.model.Stock
 import java.math.RoundingMode
+import javax.inject.Inject
 
-class StockAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class StockAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var stockArrayList = ArrayList<Stock>()
     private var header = "Категория"

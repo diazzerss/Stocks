@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,19 +17,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.diazzerss.stocks.R
 import com.diazzerss.stocks.databinding.FragmentHomeBinding
 import com.diazzerss.stocks.domain.model.Stock
-import com.diazzerss.stocks.utils.getViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val vm by lazy { getViewModel<HomeViewModel>() }
+    private val vm: HomeViewModel by viewModels()
 
-    private var stockActiveAdapter = StockAdapter()
-    private var stockGainersAdapter = StockAdapter()
-    private var stockLosersAdapter = StockAdapter()
+    @Inject lateinit var stockActiveAdapter: StockAdapter
+    @Inject lateinit var stockGainersAdapter: StockAdapter
+    @Inject lateinit var stockLosersAdapter: StockAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,24 +1,25 @@
 package com.diazzerss.stocks.data.repository
 
-import com.diazzerss.stocks.data.api.StockApiInterface
+import com.diazzerss.stocks.data.api.StockApi
 import com.diazzerss.stocks.domain.model.Stock
 import com.diazzerss.stocks.domain.repository.StockRepository
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import javax.inject.Inject
 
-class StockRepositoryImpl : StockRepository, KoinComponent {
+class StockRepositoryImpl @Inject constructor() : StockRepository{
 
-    private val stockServiceClient: StockApiInterface by inject()
+
+    @Inject
+    lateinit var stockApi: StockApi
 
     override suspend fun getStockActive(): ArrayList<Stock> {
-        return stockServiceClient.getTopActive()
+        return stockApi.getTopActive()
     }
 
     override suspend fun getStockGainers(): ArrayList<Stock> {
-        return stockServiceClient.getTopGainers()
+        return stockApi.getTopGainers()
     }
 
     override suspend fun getStockLosers(): ArrayList<Stock> {
-        return stockServiceClient.getTopLosers()
+        return stockApi.getTopLosers()
     }
 }

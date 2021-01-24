@@ -4,3 +4,4 @@ libs/
 *.iml
 src/test/
 src/androidTest
+/schemas/

@@ -6,8 +6,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.diazzerss.stocks.databinding.ItemQuoteBinding
 import com.diazzerss.stocks.domain.model.Quote
+import javax.inject.Inject
 
-class QuoteAdapter : RecyclerView.Adapter<QuoteAdapter.QuoteViewHolder>() {
+class QuoteAdapter @Inject constructor() : RecyclerView.Adapter<QuoteAdapter.QuoteViewHolder>() {
 
     private var quoteArrayList = ArrayList<Quote>()
 

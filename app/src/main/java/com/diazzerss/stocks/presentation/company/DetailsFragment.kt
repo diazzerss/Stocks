@@ -5,17 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.diazzerss.stocks.databinding.FragmentDetailsBinding
-import com.diazzerss.stocks.utils.getViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailsFragment : Fragment() {
+
+    private val vm: DetailsViewModel by viewModels()
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val vm by lazy { getViewModel<DetailsViewModel>() }
     private val ticker by lazy { arguments?.getString("ticker").toString() }
     private var quoteAdapter: QuoteAdapter = QuoteAdapter()
 

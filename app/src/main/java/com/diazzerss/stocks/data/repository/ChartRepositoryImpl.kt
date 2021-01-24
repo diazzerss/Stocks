@@ -1,17 +1,17 @@
 package com.diazzerss.stocks.data.repository
 
-import com.diazzerss.stocks.data.api.StockApiInterface
+import com.diazzerss.stocks.data.api.StockApi
 import com.diazzerss.stocks.domain.model.Graph
 import com.diazzerss.stocks.domain.repository.ChartRepository
 import io.reactivex.Observable
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import javax.inject.Inject
 
-class ChartRepositoryImpl : ChartRepository, KoinComponent {
+class ChartRepositoryImpl @Inject constructor() : ChartRepository {
 
-    private val stockServiceClient: StockApiInterface by inject()
+    @Inject
+    lateinit var stockApi: StockApi
 
     override fun getChartData1Hour(ticker: String): Observable<ArrayList<Graph>> {
-        return stockServiceClient.getChartData1Hour(ticker)
+        return stockApi.getChartData1Hour(ticker)
     }
 }

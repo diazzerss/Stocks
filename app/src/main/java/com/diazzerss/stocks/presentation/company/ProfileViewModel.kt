@@ -1,17 +1,17 @@
 package com.diazzerss.stocks.presentation.company
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.diazzerss.stocks.presentation.BaseViewModel
-import com.diazzerss.stocks.domain.model.CompanyProfile
 import com.diazzerss.stocks.data.repository.ProfileRepositoryImpl
+import com.diazzerss.stocks.domain.model.CompanyProfile
+import com.diazzerss.stocks.presentation.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ProfileViewModel : BaseViewModel() {
+class ProfileViewModel @ViewModelInject constructor(private val profileRepositoryImpl: ProfileRepositoryImpl) : BaseViewModel() {
 
-    private val repository = ProfileRepositoryImpl()
     private val _profile: MutableLiveData<ArrayList<CompanyProfile>> = MutableLiveData()
     val profile: LiveData<ArrayList<CompanyProfile>> = _profile
 
@@ -21,7 +21,7 @@ class ProfileViewModel : BaseViewModel() {
             progress.value = true
             launch(Dispatchers.IO) {
                 try {
-                    val profile = repository.getProfile(ticker)
+                    val profile = profileRepositoryImpl.getProfile(ticker)
                     _profile.postValue(profile)
                 } catch (ex: Throwable) {
                     progress.postValue(false)
